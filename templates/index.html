@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calories Burned Predictor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #e0f7fa;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        h1 {
+            text-align: center;
+            color: #00796b;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #00796b;
+            font-weight: 500;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #b2dfdb;
+            border-radius: 5px;
+            font-family: 'Roboto', sans-serif;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #00796b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        input[type="submit"]:hover {
+            background-color: #004d40;
+        }
+        textarea {
+            height: 100px;
+            resize: none;
+        }
+        .error {
+            color: red;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Metabometer - Calorie Predictor</h1>
+        <form id="calorieForm" action="/predict" method="post" onsubmit="return validateForm()">
+            <div id="error-message" class="error" style="display: none;"></div>
+            <label for="gen">Gender:</label>
+            <input type="text" id="gen" name="gen">
+            <label for="age">Age:</label>
+            <input type="text" id="age" name="age">
+            <label for="height">Height (cm):</label>
+            <input type="text" id="height" name="height">
+            <label for="weight">Weight (kg):</label>
+            <input type="text" id="weight" name="weight">
+            <label for="duration">Duration (minutes):</label>
+            <input type="text" id="duration" name="duration">
+            <label for="heart_rate">Heart Rate:</label>
+            <input type="text" id="heart_rate" name="heart_rate">
+            <label for="body_temp">Body Temperature (°C):</label>
+            <input type="text" id="body_temp" name="body_temp">
+            <input type="submit" value="Predict">
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            var gender = document.getElementById('gen').value.trim();
+            var age = document.getElementById('age').value.trim();
+            var height = document.getElementById('height').value.trim();
+            var weight = document.getElementById('weight').value.trim();
+            var duration = document.getElementById('duration').value.trim();
+            var heart_rate = document.getElementById('heart_rate').value.trim();
+            var body_temp = document.getElementById('body_temp').value.trim();
+            var errorMessage = document.getElementById('error-message');
+
+            var errors = [];
+
+            if (!gender) {
+                errors.push('Gender is required.');
+            }
+            if (age <=10  || isNaN(age)) {
+                errors.push('Age must be a number greater than 0.');
+            }
+            if (height <= 0 || isNaN(height)) {
+                errors.push('Height must be a number greater than 0.');
+            }
+            if (weight <= 15 || isNaN(weight)) {
+                errors.push('Weight must be a number greater than 0.');
+            }
+            if (duration <= 0 || isNaN(duration)) {
+                errors.push('Duration must be a number greater than 0.');
+            }
+            if (heart_rate <= 0 || isNaN(heart_rate)) {
+                errors.push('Heart Rate must be a number greater than 0.');
+            }
+            if (body_temp <= 0 || isNaN(body_temp)) {
+                errors.push('Body Temperature must be a number greater than 0.');
+            }
+
+            if (errors.length > 0) {
+                errorMessage.style.display = 'block';
+                errorMessage.innerHTML = errors.join('<br>');
+                return false;
+            } else {
+                errorMessage.style.display = 'none';
+                return true;
+            }
+        }
+    </script>
+</body>
+</html>

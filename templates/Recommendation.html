@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diet Recommendations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+        }
+        h1 {
+            color: #2e8b57;
+        }
+        p {
+            font-size: 1.2em;
+        }
+        .videos, .articles {
+            margin-top: 20px;
+        }
+        .videos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .video {
+            margin: 10px;
+            text-align: center;
+        }
+        .video img {
+            width: 100%;
+            height: auto;
+        }
+        .video a, .article a {
+            display: block;
+            margin-top: 10px;
+            color: #00796b;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .video a:hover, .article a:hover {
+            text-decoration: underline;
+        }
+        .articles ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .articles li {
+            margin: 10px 0;
+        }
+        .articles a {
+            color: #00796b;
+            text-decoration: none;
+        }
+        .articles a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Diet Recommendations</h1>
+        <p>{{ recommendations }}</p>
+        <div class="videos">
+            {% for video in videos %}
+                <div class="video">
+
+                    <a href="{{ video.link }}" target="_blank">{{ video.title }}</a>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="articles" id="articles">
+            <h2>Recommended Articles</h2>
+            <ul>
+                {% for article in articles %}
+                    <li class="article">
+                        <a href="{{ article.link }}" target="_blank">{{ article.title }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calories Burned Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+        }
+        h1 {
+            color: #2e8b57;
+        }
+        p {
+            font-size: 1.2em;
+        }
+        .recommendations {
+            margin-top: 20px;
+        }
+        #chart-container {
+            margin-top: 20px;
+            width: 100%;
+        }
+        .recommendation-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #00796b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .recommendation-button:hover {
+            background-color: #004d40;
+        }
+        .videos {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .video {
+            margin: 10px;
+            text-align: center;
+        }
+        .video img {
+            width: 100%;
+            height: auto;
+        }
+        .video a {
+            display: block;
+            margin-top: 10px;
+            color: #00796b;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .video a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calories Burned Result</h1>
+        <p>Total Calories Burned: <span id="calories">{{ calories }}</span></p>
+        <div class="recommendations" id="recommendations"></div>
+        <div id="chart-container">
+            <canvas id="caloriesChart"></canvas>
+        </div>
+        <form action="/recommendation" method="post">
+            <input type="hidden" name="calories" value="{{ calories }}">
+            <button type="submit" class="recommendation-button">Get Recommendations</button>
+        </form>
+        <div class="videos" id="videoList"></div>
+    </div>
+
+    <!-- Include Chart.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var calories = parseInt(document.getElementById("calories").textContent);
+
+            // Example chart data (replace with actual data if needed)
+            var actualCalories = [calories];
+            var predictedCalories = [calories + 100, calories + 200, calories + 300, calories + 400, calories + 500];
+
+            var allCalories = actualCalories.concat(predictedCalories);
+            var labels = ["Now", "1 day", "2 days", "3 days", "4 days", "5 days"];
+
+            var data = {
+                labels: labels,
+                datasets: [{
+                    label: 'Calories Burned',
+                    data: allCalories,
+                    backgroundColor: 'rgba(46, 139, 87, 0.2)',
+                    borderColor: 'rgba(46, 139, 87, 1)',
+                    borderWidth: 1,
+                    fill: false,
+                    tension: 0.1
+                }]
+            };
+
+            var ctx = document.getElementById('caloriesChart').getContext('2d');
+            var caloriesChart = new Chart(ctx, {
+                type: 'line',
+                data: data,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

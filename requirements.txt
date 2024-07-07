@@ -1,0 +1,6 @@
+Flask
+pandas
+pickle-mixin
+scikit-learn
+xgboost
+werkzeug
